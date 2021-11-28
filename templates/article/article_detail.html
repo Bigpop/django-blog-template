@@ -1,0 +1,18 @@
+{% extends "../base.html" %}
+{% block article-detail %}
+{% load martortags %}
+<div style="padding:5%">
+    <h1 style="text-align: center">{{ article.title }}<br><br></h1>
+    <div style="display: none">{{ article.increase_views }}</div>
+
+    <div id="container" style="width:800px;margin: auto;left: 0;right: 0;">
+        <div style="text-align: left">
+            {{ article.content|safe_markdown}}
+        </div>
+        <br><br>
+        <div style="float:right;text-align:center;padding: 0px;">
+            <pre >{{ article.author.username }}<br>{{ article.c_time }}</pre>
+        </div>
+    </div>
+</div>
+{% endblock %}

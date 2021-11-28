@@ -1,0 +1,80 @@
+{% extends "../base.html" %}
+
+{% block article-list %}
+
+<div class="list-group">
+    {% for article in articles %}
+    <div style="padding-left: 15%;padding-right: 15%;padding-bottom: 0%;">
+        <a href="{% url 'article:detail' article.id %}" class="list-group-item" style="padding-bottom: 3%;">
+            <div style="float:left">
+                <h4 class="list-group-item-heading">{{ article.title }}</h4>
+            </div>
+            <div style="float: right;">
+                <p style="font-size: xx-small; color:#c8c8c8; float: right; ">
+                    <b style="color: #646464">
+                        {{ article.views }} Reads  
+                    </b>
+                    &nbsp&nbsp{{ article.c_time}}
+                    
+                </p>
+
+            </div>
+            
+        </a>
+    </div>
+    {% endfor %}
+</div>
+<div>
+<p>
+    {{articles.number}}
+</p>
+</div>
+
+
+{% if is_paginated %}
+    <nav style="padding-left: 11%;padding-right: 11%;">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            {% endif %}
+    
+            {% if page_obj.number|add:'-4' > 1 %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'-5' }}">&hellip;</a></li>
+            {% endif %}
+    
+            {% for i in page_obj.paginator.page_range %}
+            {% if page_obj.number == i %}
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">
+                    {{ i }}
+                    <span class="sr-only">(current)</span>
+                </span>
+            </li>
+            {% elif i > page_obj.number|add:'-5' and i < page_obj.number|add:'5' %}
+            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+            {% endfor %}
+    
+            {% if page_obj.paginator.num_pages > page_obj.number|add:'4' %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.number|add:'5' }}">&hellip;</a></li>
+            {% endif %}
+    
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends '../base.html' %}
+{% block  translate-list%}
+
+{% for tran in translations %}
+<div class="panel-group" id="accordion{{ tran.id }}" role="tablist" aria-multiselectable="true"
+    xmlns="http://www.w3.org/1999/html">
+    <div class="pane{{ tran.id }} panel-default">
+        <a data-toggle="collapse" data-parent="#accordion{{ tran.id }}" href="#collapse{{ tran.id }}">
+            <div class="panel-heading" role="tab">
+                <h4 class="panel-title">
+                    {{ tran.title }}
+                </h4>
+
+            </div>
+        </a>
+        <div id="collapse{{ tran.id }}" class="panel-collapse collapse">
+            <div class="panel-body" font="it">
+                <i>
+                    <p style="padding: 1%">{{ tran.origin|linebreaks }}</p>
+                    {% ifnotequal tran.translated1 '' %}
+                    <pre>{{ tran.translated1|linebreaks }}<br>   <div style="float: right">{{ tran.source1 }}</div> </pre>
+                    {% endifnotequal %}
+
+                    {% ifnotequal tran.translated2 '' %}
+                    <pre>{{ tran.translated2 }}<br>   <div style="float: right">{{ tran.source2 }}</div> </pre>
+                    {% endifnotequal %}
+
+                    {% ifnotequal tran.translated3 '' %}
+                    <pre>{{ tran.translated3 }}<br>   <div style="float: right">{{ tran.source3 }}</div> </pre>
+                    {% endifnotequal %}
+                    {% ifnotequal tran.translated4 '' %}
+                    <pre>{{ tran.translated4}}<br>   <div style="float: right">{{ tran.source4 }}</div> </pre>
+                    {% endifnotequal %}
+                    {% ifnotequal tran.translated5 '' %}
+                    <pre>{{ tran.translated5}}<br>   <div style="float: right">{{ tran.source5 }}</div> </pre>
+                    {% endifnotequal %}
+
+                </i>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+{% if is_paginated %}
+<nav>
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li>
+            <a href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li>
+            <a href="" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+
+
+        <li class="disabled"><a href="?page{{ page_obj.number }}">第{{ page_obj.number }}页</a></li>
+
+
+
+        {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}" aria-label="Next"><span
+                    aria-hidden="true">&raquo;</span></a></li>
+        {% else %}
+        <li>
+            <a href="" aria-label="Previous">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+
+    </ul>
+</nav>
+{% endif %}
+
+{% endblock %}
